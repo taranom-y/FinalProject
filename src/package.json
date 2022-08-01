@@ -1,11 +1,17 @@
 {
     "devDependencies": {
         "@hotwired/stimulus": "^3.0.0",
+        "@popperjs/core": "^2.11.5",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^2.1.0",
+        "autoprefixer": "^10.4.8",
         "bootstrap": "^5.2.0",
         "core-js": "^3.23.0",
+        "jquery": "^3.6.0",
+        "postcss-loader": "^6.2.1",
         "regenerator-runtime": "^0.13.9",
+        "sass": "^1.54.0",
+        "sass-loader": "^12.6.0",
         "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
@@ -18,5 +24,11 @@
     },
     "dependencies": {
         "node": "^16.13.2"
-    }
+    },
+    "browserslist": [
+        "> 0.5%",
+        "last 2 versions",
+        "Firefox ESR",
+        "not dead"
+    ]
 }
