@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Product\SearchService;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +38,16 @@ class ProductController extends AbstractController
         return $this->renderForm('product/new.html.twig', [
             'product' => $product,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/search', name: 'app_product_search', methods: ['GET'])]
+    public function search(Request $request,SearchService $searchService, ProductRepository $productRepository): Response
+    {
+        $query=$request->query->get('q');
+        return $this->render('app_product_search', [
+            'q'=>$query,
+            'products'=>$searchService->search($query),
         ]);
     }
 
@@ -75,4 +86,6 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

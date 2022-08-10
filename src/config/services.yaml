@@ -20,8 +20,43 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+
+
+
+    App\Listener\TimeLoggerListener:
+      tags:
+        - name: 'doctrine.event_listener'
+          event: 'prePersist'
+          connection: 'default'
+
+        - name: 'doctrine.event_listener'
+          event: 'preUpdate'
+          connection: 'default'
+
+
+
+
+
+    App\Listener\UserLoggerListener:
+      tags:
+        - name: 'doctrine.event_listener'
+          event: 'prePersist'
+          connection: 'default'
+
+        - name: 'doctrine.event_listener'
+          event: 'preUpdate'
+          connection: 'default'
+
+
+
+
+
     app.menu_builder:
       class: App\Menu\MenuBuilder
       arguments: [ "@knp_menu.factory" ]
       tags:
         - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
+
+
+
+

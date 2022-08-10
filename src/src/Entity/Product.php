@@ -2,13 +2,22 @@
 
 namespace App\Entity;
 
+use App\Model\TimeLoggerInterface;
+use App\Model\TimeLoggerTrait;
+use App\Model\UserLoggerInterface;
+use App\Model\UserLoggerTrait;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-class Product
+#[Gedmo\SoftDeleteable(fieldName:"deletedAt")]
+class Product implements TimeLoggerInterface,UserLoggerInterface
 {
+    use TimeLoggerTrait;
+    use UserLoggerTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,22 +28,27 @@ class Product
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank()]
     private ?int $price = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $type = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(nullable: false)]
-    private ?\DateTimeImmutable $craetedAt = null;
-
-    #[ORM\Column(nullable: false)]
-    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $owner = null;
+
+    #[ORM\Column(type:"datetime",nullable:true)]
+    private $deletedAt;
+
+    public function __toString(): string
+    {
+        return "{$this->name} ( {$this->price})";
+    }
 
     public function getId(): ?int
     {
@@ -89,29 +103,6 @@ class Product
         return $this;
     }
 
-    public function getCraetedAt(): ?\DateTimeImmutable
-    {
-        return $this->craetedAt;
-    }
-
-    public function setCraetedAt(?\DateTimeImmutable $craetedAt): self
-    {
-        $this->craetedAt = $craetedAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
 
     public function getOwner(): ?string
     {
@@ -123,5 +114,18 @@ class Product
         $this->owner = $owner;
 
         return $this;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     */
+    public function setDeletedAt($deletedAt): void
+    {
+        $this->deletedAt = $deletedAt;
     }
 }

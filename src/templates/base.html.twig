@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <title>{% block title %}stationery shop{% endblock %}</title>
+        <link rel="icon" href="/assets/images/vector-logo-icon-stationery-store-200396902-fococlipping-standard.png">
         {% block stylesheets %}
             {{ encore_entry_link_tags('global') }}
             {{ encore_entry_link_tags('app') }}
@@ -16,6 +15,8 @@
     </head>
     <body>
     {{ knp_menu_render('main') }}
+
+
     <ul>
         <li>
             <a href="{{path('app_login')}}">login</a>
