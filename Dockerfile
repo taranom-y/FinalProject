@@ -14,6 +14,11 @@ RUN apt-get -y update && apt-get -y install git
 # install mysql driver
 RUN docker-php-ext-install pdo_mysql
 
+
+# instal Int boundle
+RUN apt-get install -y libicu-dev
+RUN docker-php-ext-configure intl && docker-php-ext-install intl
+
 # install npm
 RUN apt-get -y install nodejs npm
 RUN npm install --global yarn
