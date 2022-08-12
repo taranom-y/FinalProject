@@ -2,22 +2,31 @@
 
 namespace App\Entity;
 
+use App\Model\TimeLoggerInterface;
+use App\Model\TimeLoggerTrait;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
-class Message
+
+class Message implements TimeLoggerInterface
 {
+    use TimeLoggerTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
     private ?string $sender = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5)]
     private ?string $message = null;
+
 
     public function getId(): ?int
     {
@@ -47,4 +56,5 @@ class Message
 
         return $this;
     }
+
 }
