@@ -3,31 +3,41 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}stationery shop{% endblock %}</title>
-        <link rel="icon" href="/assets/images/vector-logo-icon-stationery-store-200396902-fococlipping-standard.png">
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('global') }}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+
     </head>
     <body>
+
+
     {{ knp_menu_render('main') }}
+    <div class="navbar">
+        <a class="navbar-brand" href="/">
+            <div class="logo-image">
+                <img src="public/images/products/vector-logo-icon-stationery-store-200396902-fococlipping-standard.png"/>
+            </div>
+        </a>
+        <a href="#">stationery shop</a>
+        <div class="dropdown">
+            <button class="dropbtn">Products
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('app_planner_index') }}">Planner and Calender</a>
+                <a href="{{ path('app_planner_index') }}">Paper and cardboard</a>
+            </div>
+        </div>
+    </div>
 
 
-    <ul>
-        <li>
-            <a href="{{path('app_login')}}">login</a>
-        </li>
-        <li>
-            <a href="{{path('app_logout')}}">logout</a>
-        </li>
-        <li>
-            <a href="{{path('app_register')}}">registration</a>
-        </li>
-    </ul>
-        {% block body %}{% endblock %}
+    {% block body %} {% endblock %}
     </body>
 </html>

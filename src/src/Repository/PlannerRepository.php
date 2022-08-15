@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Product;
+use App\Entity\Planner;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Product>
+ * @extends ServiceEntityRepository<Planner>
  *
- * @method Product|null find($id, $lockMode = null, $lockVersion = null)
- * @method Product|null findOneBy(array $criteria, array $orderBy = null)
- * @method Product[]    findAll()
- * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Planner|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Planner|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Planner[]    findAll()
+ * @method Planner[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository
+class PlannerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Product::class);
+        parent::__construct($registry, Planner::class);
     }
 
-    public function add(Product $entity, bool $flush = false): void
+    public function add(Planner $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Product $entity, bool $flush = false): void
+    public function remove(Planner $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Product[] Returns an array of Product objects
+//     * @return Planner[] Returns an array of Planner objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ProductRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Product
+//    public function findOneBySomeField($value): ?Planner
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')
@@ -63,13 +63,4 @@ class ProductRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public  function searchByName($productNamePart){
-        $qb=$this->createQueryBuilder('p');
-    return $qb
-            ->andWhere($qb->expr()->like('p.name', 'name'))
-            ->setParameter('name', "%$productNamePart%")
-            ->orderBy('p.name', 'ASC')
-            ->getQuery()
-            ->getResult();
-}
 }

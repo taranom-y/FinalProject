@@ -10,9 +10,13 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName:"deletedAt")]
+#[Vich\Uploadable]
 class Product implements TimeLoggerInterface,UserLoggerInterface
 {
     use TimeLoggerTrait;
@@ -37,6 +41,10 @@ class Product implements TimeLoggerInterface,UserLoggerInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Vich\UploadableField(mapping:"product",fileNameProperty: "image")]
+    private ?File $imageFile = null;
 
 
     #[ORM\Column(length: 255)]
@@ -103,6 +111,18 @@ class Product implements TimeLoggerInterface,UserLoggerInterface
         return $this;
     }
 
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
 
     public function getOwner(): ?string
     {
@@ -121,9 +141,7 @@ class Product implements TimeLoggerInterface,UserLoggerInterface
         return $this->deletedAt;
     }
 
-    /**
-     * @param mixed $deletedAt
-     */
+
     public function setDeletedAt($deletedAt): void
     {
         $this->deletedAt = $deletedAt;

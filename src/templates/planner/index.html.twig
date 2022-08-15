@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planner index{% endblock %}
+
+{% block body %}
+    <h1>Planner index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>ImageFile</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planner in planners %}
+            <tr>
+                <td>{{ planner.id }}</td>
+                <td>{{ planner.name }}</td>
+                <td>{{ planner.price }}</td>
+                <td>{{ planner.image }}</td>
+                <td>{{ planner.imageFile }}</td>
+                <td>
+                    <a href="{{ path('app_planner_show', {'id': planner.id}) }}">show</a>
+                    <a href="{{ path('app_planner_edit', {'id': planner.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_planner_new') }}">Create new</a>
+{% endblock %}
