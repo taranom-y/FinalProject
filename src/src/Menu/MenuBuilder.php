@@ -25,49 +25,30 @@ class MenuBuilder {
     public function createMainMenu(array $options): ItemInterface
     {
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class','navbar navbar-expand-lg navbar-dark bg-dark text-light ');
+        $menu->setChildrenAttribute('class','navbar text-light ');
 
         $menu->addChild('Home', ['route' => 'app_home'])
             ->setLinkAttribute('class',' nav-link px-3 ');
 
-        $menu->addChild('About us', ['route' => 'app_about'])
+        $menu->addChild('About', ['route' => 'app_about'])
             ->setLinkAttribute('class',' nav-link px-3');
 
-        $menu->addChild('Contact Us', ['route' => 'app_message_new'])
+        $menu->addChild('Contact', ['route' => 'app_message_new'])
             ->setLinkAttribute('class',' nav-link px-3 ');
 
-        $menu->addChild('Login/Logout', ['route' => 'app_login'])
+        $menu->addChild('Login', ['route' => 'app_login'])
+            ->setLinkAttribute('class',' nav-link px-3 ');
+
+        $menu->addChild('Logout', ['route' => 'app_logout'])
             ->setLinkAttribute('class',' nav-link px-3 ');
 
         $menu->addChild('Register', ['route' => 'app_register'])
             ->setLinkAttribute('class',' nav-link px-3 ');
 
-        $menu->addChild('management', ['route' => 'app_register'])
+        $menu->addChild('management', ['route' => 'admin'])
             ->setLinkAttribute('class',' nav-link px-3 ');
 
-/*
 
-        $menu->addChild('Products')->setLinkAttribute('class','nav-link dropdown ');
-        $menu['Products']->addChild('Planner and Calender',['route' =>'app_planner_index'])
-            ->setLinkAttribute('class','dropdown-item');
-        $menu['Products']->addChild('Paper and cardboard',['route' =>'app_planner_index'])
-            ->setLinkAttribute('class','dropdown-item');
-
-
-
-
-
-        /*
-
-        $planners = $this->entityManager->getRepository(Planner::class)->findAll();
-
-        foreach ($planners as $planner) {
-            $menu['Planners']->addChild($planner->getName(), [
-                'route'           => 'app_planner_show',
-                'routeParameters' => ['id' => $planner->getId()],
-            ]);
-        }
-        */
 
         return $menu;
     }
