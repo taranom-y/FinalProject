@@ -19,8 +19,6 @@ class PaperType extends AbstractType
             ->add('image')
             ->add('imageFile')
             ->add('deletedAt')
-            ->add('createdUser')
-            ->add('updatedUser')
         ;
     }
 
