@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Model;
-
 use Doctrine\ORM\Mapping as ORM;
 trait UserLoggerTrait
 {
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
-    protected $createdUser;
+    private \App\Entity\User $createdUser;
 
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
-    protected $updatedUser;
+    private \App\Entity\User $updatedUser;
 
     public function getCreatedUser(): \App\Entity\User{
         return $this->createdUser;

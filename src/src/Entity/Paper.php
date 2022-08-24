@@ -17,9 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PaperRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName:"deletedAt")]
 #[Vich\Uploadable]
-class Paper extends Product
+class Paper extends Product implements UserLoggerInterface,TimeLoggerInterface
 {
-
 
 
 }
