@@ -22,7 +22,7 @@
                 <td>{{ paper.price }}</td>
                 <td>{{ paper.description }}</td>
                 <td>{{ paper.type }}</td>
-                <td>{{ paper.image }}</td>
+                <td><img src="{{ asset('build/images' ~ paper.image) }}</td>
                 <td>
                     <a href="{{ path('app_paper_show', {'id': paper.id}) }}">show</a>
                     {% if is_granted("[ROLE_USER,ROLE_ADMIN] ") %}
