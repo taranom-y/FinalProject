@@ -21,7 +21,6 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
-
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository): Response
     {
@@ -41,11 +40,12 @@ class ProductController extends AbstractController
         ]);
     }
 
+
     #[Route('/search', name: 'app_product_search', methods: ['GET'])]
     public function search(Request $request,SearchService $searchService, ProductRepository $productRepository): Response
     {
         $query=$request->query->get('q');
-        return $this->render('app_product_search', [
+        return $this->render('product/index.html.twig', [
             'q'=>$query,
             'products'=>$searchService->search($query),
         ]);

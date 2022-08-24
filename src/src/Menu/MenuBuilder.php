@@ -2,6 +2,7 @@
 
 namespace App\Menu;
 
+use App\Entity\Planner;
 use App\Entity\Product;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
@@ -24,23 +25,30 @@ class MenuBuilder {
     public function createMainMenu(array $options): ItemInterface
     {
         $menu = $this->factory->createItem('root');
+        $menu->setChildrenAttribute('class','navbar text-light ');
 
-        $menu->addChild('Home', ['route' => 'app_home']);
-        $menu->addChild('About us', ['route' => 'app_about']);
-        $menu->addChild('Contact Us', ['route' => 'app_message_new']);
+        $menu->addChild('Home', ['route' => 'app_home'])
+            ->setLinkAttribute('class',' nav-link px-3 ');
 
-        $menu->addChild('Products', ['route' => 'app_product_index']);
+        $menu->addChild('About', ['route' => 'app_about'])
+            ->setLinkAttribute('class',' nav-link px-3');
+
+        $menu->addChild('Contact', ['route' => 'app_message_new'])
+            ->setLinkAttribute('class',' nav-link px-3 ');
+
+        $menu->addChild('Login', ['route' => 'app_login'])
+            ->setLinkAttribute('class',' nav-link px-3 ');
+
+        $menu->addChild('Logout', ['route' => 'app_logout'])
+            ->setLinkAttribute('class',' nav-link px-3 ');
+
+        $menu->addChild('Register', ['route' => 'app_register'])
+            ->setLinkAttribute('class',' nav-link px-3 ');
+
+        $menu->addChild('management', ['route' => 'admin'])
+            ->setLinkAttribute('class',' nav-link px-3 ');
 
 
-        /** @var Product[] $products */
-        $products = $this->entityManager->getRepository(Product::class)->findAll();
-
-        foreach ($products as $product) {
-            $menu['Products']->addChild($product->getType(), [
-                'route'           => 'app_product_show',
-                'routeParameters' => ['id' => $product->getId()],
-            ]);
-        }
 
         return $menu;
     }

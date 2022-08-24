@@ -63,4 +63,14 @@ class ProductRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public  function searchByName($productNamePart){
+        $qb=$this->createQueryBuilder('p');
+    return $qb
+            ->andWhere($qb->expr()->like('p.name', ':name'))
+            ->setParameter('name', "%$productNamePart%")
+            ->orderBy('p.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+}
+
 }

@@ -2,11 +2,13 @@
 
 namespace App\Listener;
 
-
-use App\Model\UserLoggerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use App\Model\UserLoggerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 
 class UserLoggerListener
 {

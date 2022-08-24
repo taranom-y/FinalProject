@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Doctrine\ORM\Mapping as ORM;
 trait TimeLoggerTrait
 {
     #[ORM\Column(type: 'datetime_immutable')]

@@ -16,6 +16,8 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
 
+
+
 when@test:
     doctrine:
         dbal:
@@ -32,6 +34,14 @@ when@prod:
             result_cache_driver:
                 type: pool
                 pool: doctrine.result_cache_pool
+
+
+        filters:
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+
+                enabled: true
+
 
     framework:
         cache:

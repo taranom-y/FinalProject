@@ -7,12 +7,24 @@ use App\Model\TimeLoggerTrait;
 use App\Model\UserLoggerInterface;
 use App\Model\UserLoggerTrait;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\InheritanceType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName:"deletedAt")]
+#[Vich\Uploadable]
+/**
+ * InheritanceType("SINGLE_TABLE")
+ * DiscriminatorColumn(name="type", type="string")
+ * DiscriminatorMap({"planner" = "Planner", "paper" = "Paper","product"="Product"})
+ */
 class Product implements TimeLoggerInterface,UserLoggerInterface
 {
     use TimeLoggerTrait;
@@ -21,33 +33,39 @@ class Product implements TimeLoggerInterface,UserLoggerInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
-    private ?string $name = null;
+    protected ?string $name = null;
 
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?int $price = null;
+    protected ?int $price = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
-    private ?string $type = null;
+    protected ?string $description =null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+    protected ?string $type = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    protected ?string $image = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $owner = null;
+    #[ORM\Column(nullable: true)]
+    #[Vich\UploadableField(mapping:"product",fileNameProperty: "image")]
+    protected ?File $imageFile = null;
+
 
     #[ORM\Column(type:"datetime",nullable:true)]
-    private $deletedAt;
+    protected $deletedAt;
 
-    public function __toString(): string
+    #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'product')]
+    private Collection $orders;
+
+    public function __construct()
     {
-        return "{$this->name} ( {$this->price})";
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,15 +121,14 @@ class Product implements TimeLoggerInterface,UserLoggerInterface
         return $this;
     }
 
-
-    public function getOwner(): ?string
+    public function getImageFile(): ?File
     {
-        return $this->owner;
+        return $this->imageFile;
     }
 
-    public function setOwner(string $owner): self
+    public function setImageFile(?File $imageFile): self
     {
-        $this->owner = $owner;
+        $this->imageFile = $imageFile;
 
         return $this;
     }
@@ -121,11 +138,57 @@ class Product implements TimeLoggerInterface,UserLoggerInterface
         return $this->deletedAt;
     }
 
-    /**
-     * @param mixed $deletedAt
-     */
+
     public function setDeletedAt($deletedAt): void
     {
         $this->deletedAt = $deletedAt;
     }
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            $order->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function isTypeOf($type){
+        return match ($type) {
+            'planner' => $this instanceof Planner,
+            'paper' => $this instanceof Paper,
+            default => throw new \RuntimeException('The type is invalid' . $type),
+        };
+    }
+
+
 }
