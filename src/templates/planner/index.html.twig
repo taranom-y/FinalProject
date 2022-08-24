@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Planner index{% endblock %}
+{% block title %}Planner Page | {{parent () }}{% endblock %}
 
 {% block body %}
     <h1>Planner index</h1>
@@ -11,9 +11,11 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Price</th>
+                <th>Description</th>
+                <th>Type</th>
                 <th>Image</th>
                 <th>ImageFile</th>
-                <th>actions</th>
+                <th>DeletedAt</th>
             </tr>
         </thead>
         <tbody>
@@ -22,8 +24,11 @@
                 <td>{{ planner.id }}</td>
                 <td>{{ planner.name }}</td>
                 <td>{{ planner.price }}</td>
+                <td>{{ planner.description }}</td>
+                <td>{{ planner.type }}</td>
                 <td>{{ planner.image }}</td>
                 <td>{{ planner.imageFile }}</td>
+                <td>{{ planner.deletedAt ? planner.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_planner_show', {'id': planner.id}) }}">show</a>
                     <a href="{{ path('app_planner_edit', {'id': planner.id}) }}">edit</a>
@@ -31,7 +36,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="9">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

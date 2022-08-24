@@ -30,9 +30,9 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/order, roles: [ROLE_USER,ROLE_ADMIN] }
-        - { path: ^/app_paper_new, roles: ROLE_MANAGER }
-        - { path: ^/app_paper_edit, roles: ROLE_MANAGER  }
-        - { path: ^/app_paper_delete, roles: ROLE_MANAGER }
+        - { path: ^/app_product_new, roles: ROLE_MANAGER }
+        - { path: ^/app_product_edit, roles: ROLE_MANAGER  }
+        - { path: ^/app_product_delete, roles: ROLE_MANAGER }
 
 
 when@test:

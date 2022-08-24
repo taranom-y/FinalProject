@@ -21,7 +21,6 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
-
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository): Response
     {
@@ -40,6 +39,7 @@ class ProductController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/search', name: 'app_product_search', methods: ['GET'])]
     public function search(Request $request,SearchService $searchService, ProductRepository $productRepository): Response
