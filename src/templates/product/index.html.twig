@@ -9,21 +9,21 @@
         <input type="submit" value="Search">
     </form>
     <h1 class="my-5">Products</h1>
-        {% for product in products %}
-            <div class="card m-3 d-inline-block" style="width: 18rem;">
-                <img class="card-img-top" src="{{ asset('public/images/products' ~ product.getImage()) }}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <h5 class="card-title">{{ product.price }}</h5>
-                    <p class="card-text">{{ product.description }}</p>
-                    <a class="btn btn-primary" href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
+    {% for product in products %}
+        <div class="card m-3 d-inline-block" style="width: 18rem;">
+            <img class="card-img-top" src="{{ asset('build/images' ~ product.image) }}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <h5 class="card-title">{{ product.price }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <a class="btn btn-primary" href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
 
             </div>
-            </div>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
+        </div>
+    {% else %}
+        <tr>
+            <td colspan="9">no records found</td>
+        </tr>
+    {% endfor %}
 
 {% endblock %}

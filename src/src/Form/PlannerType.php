@@ -17,8 +17,6 @@ class PlannerType extends AbstractType
             ->add('type')
             ->add('description')
             ->add('image')
-            ->add('imageFile')
-            ->add('deletedAt')
 
         ;
     }

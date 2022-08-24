@@ -8,30 +8,27 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Description</th>
                 <th>Type</th>
                 <th>Image</th>
-                <th>ImageFile</th>
-                <th>DeletedAt</th>
+
             </tr>
         </thead>
         <tbody>
         {% for planner in planners %}
             <tr>
-                <td>{{ planner.id }}</td>
                 <td>{{ planner.name }}</td>
                 <td>{{ planner.price }}</td>
                 <td>{{ planner.description }}</td>
                 <td>{{ planner.type }}</td>
                 <td>{{ planner.image }}</td>
-                <td>{{ planner.imageFile }}</td>
-                <td>{{ planner.deletedAt ? planner.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_planner_show', {'id': planner.id}) }}">show</a>
+                    {% if is_granted("[ROLE_USER,ROLE_ADMIN] ") %}
                     <a href="{{ path('app_planner_edit', {'id': planner.id}) }}">edit</a>
+                    {%endif%}
                 </td>
             </tr>
         {% else %}
@@ -42,5 +39,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_planner_new') }}">Create new</a>
+    {% if is_granted("[ROLE_USER,ROLE_ADMIN] ") %}
+        <a class="btn btn-primary " href="{{ path('app_planner_new') }}">Create new</a>
+    {% endif %}
+
 {% endblock %}

@@ -8,10 +8,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
                 <th>Name</th>
                 <td>{{ product.name }}</td>
             </tr>
@@ -21,11 +17,7 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ product.image }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ product.type }}</td>
+                <td> <img src="{{ asset('images' ~ product.image) }}"  alt="product image"></td>
             </tr>
             <tr>
                 <th>description</th>

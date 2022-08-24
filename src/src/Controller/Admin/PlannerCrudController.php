@@ -2,24 +2,22 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Product;
+use App\Entity\Planner;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ProductCrudController extends AbstractCrudController
+class PlannerCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Product::class;
+        return Planner::class;
     }
 
     public function  configureActions(Actions $actions): Actions
@@ -41,28 +39,25 @@ class ProductCrudController extends AbstractCrudController
 
     }
 
-
-
     public function configureFields(string $pageName): iterable
     {
         return [
-               IdField::new('id')->hideOnForm(),
-               TextField::new('name'),
-               NumberField::new('price'),
-               TextField::new('type'),
-               TextField::new('description'),
-               ImageField::new('image')
-                   ->setBasePath('/images')
-                   ->setUploadDir('assets/images')
-                   ->setUploadedFileNamePattern('[randomhash].[extension]')
-                   ->setRequired(false),
-           ];
+            IdField::new('id')->hideOnForm(),
+            TextField::new('name'),
+            NumberField::new('price'),
+            TextField::new('type'),
+            TextField::new('description'),
+            ImageField::new('image')
+                ->setBasePath('/images')
+                ->setUploadDir('assets/images')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(false),
+        ];
     }
-
     public function configureFilters(Filters $filters): Filters
     {
-          return  $filters
-           ->add('type');
+        return  $filters
+            ->add('name');
     }
 
 }

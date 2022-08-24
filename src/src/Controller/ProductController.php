@@ -45,7 +45,7 @@ class ProductController extends AbstractController
     public function search(Request $request,SearchService $searchService, ProductRepository $productRepository): Response
     {
         $query=$request->query->get('q');
-        return $this->render('app_product_search', [
+        return $this->render('product/index.html.twig', [
             'q'=>$query,
             'products'=>$searchService->search($query),
         ]);

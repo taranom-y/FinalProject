@@ -8,31 +8,26 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Description</th>
                 <th>Type</th>
                 <th>Image</th>
-                <th>ImageFile</th>
-                <th>DeletedAt</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for paper in papers %}
             <tr>
-                <td>{{ paper.id }}</td>
                 <td>{{ paper.name }}</td>
                 <td>{{ paper.price }}</td>
                 <td>{{ paper.description }}</td>
                 <td>{{ paper.type }}</td>
                 <td>{{ paper.image }}</td>
-                <td>{{ paper.imageFile }}</td>
-                <td>{{ paper.deletedAt ? paper.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_paper_show', {'id': paper.id}) }}">show</a>
+                    {% if is_granted("[ROLE_USER,ROLE_ADMIN] ") %}
                     <a href="{{ path('app_paper_edit', {'id': paper.id}) }}">edit</a>
+                    {%endif%}
                 </td>
             </tr>
         {% else %}
@@ -42,6 +37,8 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if is_granted("ROLE_MANAGER") %}
+        <a class="btn btn-primary "href="{{ path('app_paper_new') }}">Create new</a>
+    {% endif %}
 
-    <a href="{{ path('app_paper_new') }}">Create new</a>
 {% endblock %}

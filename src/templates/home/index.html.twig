@@ -3,9 +3,26 @@
 {% block title %}Home Page | {{parent () }} {% endblock %}
 
 {% block body %}
-<style>
 
-</style>
+        <form method="get" action="{{ path('app_product_search') }}">
+            <input type="text" name="q"/>
+            <input type="submit" value="Search">
+        </form>
+        <h1 class="my-5">Products</h1>
+        {% for product in products %}
+            <div class="card m-3 d-inline-block" style="width: 18rem;">
+                <img class="card-img-top" src="{{asset('build/images' ~ product.image )}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <h5 class="card-title">{{ product.price }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <a class="btn btn-primary" href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
 
-
+                </div>
+            </div>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
 {% endblock %}
